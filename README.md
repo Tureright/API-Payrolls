@@ -1,28 +1,28 @@
 ## 📚 Table of Contents
 
-- [🛠️ About This Project](#️about-this-project)
-- [🧱 Architecture Overview](#architecture-overview)
-- [✅ Development Practices](#development-practices)
-- [📁 Modules](#modules)
-  - [👥 Employees Module](#employees-module)
-  - [📄 Payroll Module](#payroll-module)
-  - [📆 Calendar Module](#calendar-module)
-- [🧪 Quality Assurance](#quality-assurance)
-  - [✅ TDD with QUnitGS2](#tdd-with-qunitgs2)
-  - [📄 Test Suite Overview](#test-suite-overview)
-  - [🔍 Example: Testing Payroll Types for a Specific Admin](#example-testing-payroll-types-for-a-specific-admin)
-  - [🧪 Summary](#summary)
+* [🛠️ About This Project](#about-this-project)
+* [🧱 Architecture Overview](#architecture-overview)
+* [✅ Development Practices](#development-practices)
+* [📁 Modules](#modules)
 
+  * [👥 Employees Module](#employees-module)
+  * [📄 Payroll Module](#payroll-module)
+  * [📆 Calendar Module](#calendar-module)
+* [🧪 Quality Assurance](#quality-assurance)
 
-# 🛠️ About This Project
+  * [✅ TDD with QUnitGS2](#tdd-with-qunitgs2)
+  * [📄 Test Suite Overview](#test-suite-overview)
+  * [🔍 Example: Testing Payroll Types for a Specific Admin](#example-testing-payroll-types-for-a-specific-admin)
+  * [🧪 Summary](#summary)
+
+## 🛠️ About This Project <a name="about-this-project"></a>
 
 This repository contains the **backend implementation** of Gardner Academy's ERP system, developed using **Google Apps Script (GAS)**. It is deployed within the institution’s Google Workspace and managed exclusively by the institutional developer account:
 📧 `developers@gardneracademy.edu.ec`.
 
 The backend operates as a **serverless application**, with each feature exposed as an **HTTP-accessible handler**. Internally, it follows a modular design inspired by the **Model-View-Controller (MVC)** pattern to ensure separation of concerns and maintainability.
 
-
-## 🧱 Architecture Overview
+## 🧱 Architecture Overview <a name="architecture-overview"></a>
 
 The application is structured around two main entry points (Routes.gs):
 
@@ -35,20 +35,15 @@ These functions interpret incoming HTTP requests by reading the `action` paramet
 
 This serverless + MVC architecture is documented as part of the system's C4 model.
 
----
-
-## ✅ Development Practices
+## ✅ Development Practices <a name="development-practices"></a>
 
 The backend was built using a **Test-Driven Development (TDD)** methodology. Automated tests were written using [**QUnitGS2**](https://github.com/artofthesmart/QUnitGS2), a GAS-compatible testing library. Each feature was implemented after a failing test was written, and then refactored to meet code quality standards.
 
-
-## 📁 Modules
+## 📁 Modules <a name="modules"></a>
 
 Each functional module follows the **MVC-inspired pattern** adapted for Google Apps Script. Controllers act as entry points and invoke service functions that interact with Firestore or Google APIs. Common utility functions for formatting and parsing are located in the `Utils` directory.
 
----
-
-### 👥 Employees Module
+### 👥 Employees Module <a name="employees-module"></a>
 
 This module manages the **teachers' data**, including profile information, work history, and document references. All employee records are stored in the Firestore collection `employees`.
 
@@ -90,9 +85,7 @@ function getAllEmployees() {
   * `enrichWithId()`: Adds Firestore document ID as a field
   * `formatDateLocal()`, `parseISOToDate()`: Format and parse date fields
 
----
-
-### 📄 Payroll Module
+### 📄 Payroll Module <a name="payroll-module"></a>
 
 Handles **salary records** for teachers. Each payroll is a subdocument inside an employee's Firestore document under the `payrolls` subcollection.
 
@@ -134,9 +127,7 @@ function getAllPayrolls() {
 
   * `toLocalDateString()`: Formats timestamps to human-readable date strings
 
----
-
-### 📆 Calendar Module
+### 📆 Calendar Module <a name="calendar-module"></a>
 
 This module uses the **Google Calendar API** to manage event schedules. Each employee stores a reference to their calendar via a `calendarId`.
 
@@ -186,19 +177,17 @@ function listCalendarsForEmployees() {
 
   * `Google Calendar Advanced Service` (`Calendar.Calendars.get()`)
 
----
-
-## 🧪 Quality Assurance
+## 🧪 Quality Assurance <a name="quality-assurance"></a>
 
 The backend for the ERP system was developed using **Test-Driven Development (TDD)** to ensure that the business logic meets the defined user requirements from the very beginning. The testing framework used is QUnitGS2, a unit testing library specifically built for Google Apps Script.
 
 All core modules (Employees, Payroll, Calendars) are validated through automated tests written using QUnitGS2, executed directly via the `doGet()` entry point of a dedicated testing script file.
 
-### ✅ TDD with QUnitGS2
+### ✅ TDD with QUnitGS2 <a name="tdd-with-qunitgs2"></a>
 
 In accordance with TDD principles, each functionality starts with a failing test based on acceptance criteria derived from the user stories. The implementation is then iteratively written until the test passes, followed by code refactoring if needed.
 
-### 📄 Test Suite Overview
+### 📄 Test Suite Overview <a name="test-suite-overview"></a>
 
 Here's an overview of the test suite as registered in the `doGet()` method of the test runner:
 
@@ -210,9 +199,9 @@ QUnit.test("PUnit02: HU1-Criterio3: Se deben mostrar todos los tipos de roles de
 
 Each test maps directly to a **User Story** (HU) and a specific **acceptance criterion**, forming a complete traceable test plan that aligns the implementation with business requirements.
 
-### 🔍 Example: Testing Payroll Types for a Specific Admin
+### 🔍 Example: Testing Payroll Types for a Specific Admin <a name="example-testing-payroll-types-for-a-specific-admin"></a>
 
-#### 🎯 Objective
+#### 🌟 Objective
 
 Verify that a professor (identified via `adminId`) has payrolls of all valid types:
 
@@ -300,9 +289,7 @@ This mock structure ensures that:
 * The behavior of services remains testable and predictable
 * No connection to external systems (like Firestore or Drive) is needed
 
----
-
-### 🧪 Summary
+### 🧪 Summary <a name="summary"></a>
 
 * Tests are run from a dedicated test endpoint (`doGet()`), making results observable in the browser
 * Each test is named and organized by **HU (User Story)** and **Criterio (Acceptance Criteria)** for traceability
